@@ -1,0 +1,20 @@
+server:
+  port: ${API_PORT:8080}
+
+spring:
+  cassandra:
+    contact-points: ${CASSANDRA_CONTACT_POINTS:cassandra}
+    port: ${CASSANDRA_PORT:9042}
+    local-datacenter: ${CASSANDRA_LOCAL_DC:datacenter1}
+    keyspace-name: ${CASSANDRA_KEYSPACE:obs}
+    schema-action: none
+    request:
+      timeout: 10s
+    connection:
+      init-query-timeout: 10s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
