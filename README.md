@@ -51,17 +51,17 @@ Ollama), validated end-to-end on both paths.
 
 ```mermaid
 flowchart LR
-    P["replay-producer\nNASA HTTP logs"] --> K
-    INJ["anomaly-injector\n(on demand)"] --> K
-    K[("Kafka\naccess-logs · 3 partitions\nKRaft, no ZooKeeper")] --> S
-    S["Spark Structured Streaming\n10-min windows · 5-min watermark\naggregation + anomaly detection"] --> C
-    C[("Cassandra — obs keyspace\nmetrics_by_path · metrics_by_ip\nmetrics_by_status\ntop_ips_by_window · anomalies")] --> A
-    A["Spring Boot API :8080\n/api/metrics/path · /ip · /status\n/api/metrics/top-ips\n/api/anomalies · /api/health"] --> AG
+    P["replay-producer<br/>NASA HTTP logs"] --> K
+    INJ["anomaly-injector<br/>(on demand)"] --> K
+    K[("Kafka<br/>access-logs · 3 partitions<br/>KRaft, no ZooKeeper")] --> S
+    S["Spark Structured Streaming<br/>10-min windows · 5-min watermark<br/>aggregation + anomaly detection"] --> C
+    C[("Cassandra — obs keyspace<br/>metrics_by_path · metrics_by_ip<br/>metrics_by_status<br/>top_ips_by_window · anomalies")] --> A
+    A["Spring Boot API :8080<br/>/api/metrics/path · /ip · /status<br/>/api/metrics/top-ips<br/>/api/anomalies · /api/health"] --> AG
 
     subgraph trust["Trust boundary: LLM selects tools, never writes CQL"]
-        AG["LangGraph Agent\nparse_intent → select_tool\n→ execute_tool → check_result\n→ compose_answer  ↺ refine ×2"]
-        TL["5 typed tools — HTTP only\ncount_hits · ip_volume\nstatus_distribution\ntop_ips · list_anomalies"]
-        LL["AnthropicLLM | OllamaLLM/GPU\nswappable via LLM_PROVIDER"]
+        AG["LangGraph Agent<br/>parse_intent → select_tool<br/>→ execute_tool → check_result<br/>→ compose_answer  ↺ refine ×2"]
+        TL["5 typed tools — HTTP only<br/>count_hits · ip_volume<br/>status_distribution<br/>top_ips · list_anomalies"]
+        LL["AnthropicLLM | OllamaLLM/GPU<br/>swappable via LLM_PROVIDER"]
     end
 
     TL --- AG
@@ -98,7 +98,7 @@ For a detailed discussion of every architectural decision, see
 NVIDIA GPU with the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html).
 
 ```bash
-git clone <repo-url> && cd cloud
+git clone <repo-url> && cd streaming-observability-platform
 
 # Configure
 cp .env.example .env
@@ -106,8 +106,7 @@ cp .env.example .env
 # or LLM_PROVIDER=ollama, LLM_MODEL=qwen2.5:7b  (Ollama path)
 
 # Download the NASA HTTP dataset (~20 MB compressed)
-curl -L "https://web.archive.org/web/0/ftp://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz" \
-     -o data/nasa_jul95.gz
+curl -L -o data/nasa_jul95.gz "https://github.com/greymd/NASA-HTTP/raw/main/NASA_access_log_Jul95.gz"
 # Linux/WSL:
 gunzip -k data/nasa_jul95.gz && mv data/nasa_jul95 data/access_log
 # Windows without WSL: extract with 7-Zip, rename result to data/access_log
