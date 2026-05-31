@@ -96,7 +96,7 @@ def execute_tool(state: AgentState) -> AgentState:
 
 
 def _empty(result) -> bool:
-    return result is None or (isinstance(result, list) and len(result) == 0)
+    return isinstance(result, list) and len(result) == 0
 
 
 def _precompute(tool, result):

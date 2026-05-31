@@ -21,7 +21,7 @@ services:
       KAFKA_LISTENERS: "PLAINTEXT://:9092,CONTROLLER://:9093"
       KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT"
-      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@localhost:9093"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@localhost:9093"  # localhost correct: controller and broker share the same KRaft JVM
       KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_NUM_PARTITIONS: "${KAFKA_PARTITIONS:-3}"
@@ -175,7 +175,7 @@ services:
     container_name: agent
     networks: [obsnet]
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - "host.docker.internal:host-gateway"  # Linux doesn't inject this automatically; needed so the agent can reach Ollama on the host GPU
     environment:
       API_BASE_URL: "${API_BASE_URL:-http://springboot-api:8080}"
       LLM_PROVIDER: "${LLM_PROVIDER:-anthropic}"

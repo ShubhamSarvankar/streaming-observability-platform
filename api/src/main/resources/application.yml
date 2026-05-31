@@ -7,7 +7,7 @@ spring:
     port: ${CASSANDRA_PORT:9042}
     local-datacenter: ${CASSANDRA_LOCAL_DC:datacenter1}
     keyspace-name: ${CASSANDRA_KEYSPACE:obs}
-    schema-action: none
+    schema-action: none  # tables are created by cassandra-init (schema.cql); Spring must not attempt DDL
     request:
       timeout: 10s
     connection:

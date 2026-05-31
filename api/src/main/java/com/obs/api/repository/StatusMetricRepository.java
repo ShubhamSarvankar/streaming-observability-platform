@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 public interface StatusMetricRepository extends CassandraRepository<StatusMetric, String> {
 
     @Query("SELECT * FROM metrics_by_status WHERE status_class = :sc " +
-           "AND window_start >= :from AND window_start <= :to")
+           "AND window_start >= :from AND window_start <= :to LIMIT 10000")
     List<StatusMetric> findRange(@Param("sc") String statusClass,
                                  @Param("from") Instant from,
                                  @Param("to") Instant to);

@@ -17,18 +17,11 @@ __MACOSX/
 # IDE / local tooling
 .claude/
 
-# Coursework PDFs (original briefs, not part of the platform project)
-cassandra_miniproject.pdf
-spark_miniproject.pdf
-spark/MiniProject2LogResult_Readme.pdf
-
-# Coursework legacy directories (not used by the platform)
-cassandra/BOW36_HUJ16_SHS702/
-spark/MiniPJ2Part2_result/
-spark/MiniPJ2Part3_result/
-
 # Scratch scripts from development sessions
 smoke_parser.py
 
 # Claude Code project context (not shipped with the platform)
 claude.md
+
+# Windows null-device artifacts
+nul

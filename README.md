@@ -149,7 +149,7 @@ and cross-checkable with direct API calls:
 ```
 how many hits to /shuttle/missions/ in July 1995
 which IP made the most requests in the window starting 1995-07-03T16:20:00Z
-show 4xx spikes on 2026-05-30
+show 4xx spikes on 1995-07-03
 ```
 
 ### Anomaly demo
@@ -162,7 +162,7 @@ docker compose --profile tools run --rm anomaly-injector
 # spark-streaming to see the anomaly surface in ~1 min instead of ~10.
 
 # After one window, ask the agent:
-# "show anomalies on <today's date>"
+# "show anomalies on 1995-07-03"
 ```
 
 ---

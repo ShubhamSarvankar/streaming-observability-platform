@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 public interface IpMetricRepository extends CassandraRepository<IpMetric, String> {
 
     @Query("SELECT * FROM metrics_by_ip WHERE client_ip = :ip " +
-           "AND window_start >= :from AND window_start <= :to")
+           "AND window_start >= :from AND window_start <= :to LIMIT 10000")
     List<IpMetric> findRange(@Param("ip") String ip,
                              @Param("from") Instant from,
                              @Param("to") Instant to);

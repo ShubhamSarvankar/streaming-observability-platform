@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 public interface PathMetricRepository extends CassandraRepository<PathMetric, String> {
 
     @Query("SELECT * FROM metrics_by_path WHERE path = :path " +
-           "AND window_start >= :from AND window_start <= :to")
+           "AND window_start >= :from AND window_start <= :to LIMIT 10000")
     List<PathMetric> findRange(@Param("path") String path,
                                @Param("from") Instant from,
                                @Param("to") Instant to);

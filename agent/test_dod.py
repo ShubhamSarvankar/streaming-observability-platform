@@ -6,7 +6,7 @@ Run inside the agent container:
 import json
 import sys
 import traceback
-from datetime import datetime, date
+from datetime import datetime, date, timezone
 
 from graph import build_graph
 
@@ -55,7 +55,8 @@ print("=" * 72)
 
 q1 = run("Q1", "how many hits to /shuttle/missions/ in July 1995")
 q2 = run("Q2", "which IP made the most requests in the window starting 1995-07-03T16:20:00Z")
-q3 = run("Q3", "show 4xx spikes on 2026-05-30")
+today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+q3 = run("Q3", f"show 4xx spikes on {today}")
 
 # ── 2. Refine loop: ask about data that does not exist ────────────────────────
 print("\n" + "=" * 72)

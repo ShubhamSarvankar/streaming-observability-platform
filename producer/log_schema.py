@@ -23,12 +23,14 @@ def parse_line(line):
     except ValueError:
         return None
     host = g["host"]
+    if not _IP.match(host):
+        return None
     status = int(g["status"]) if g["status"] != "-" else 0
     nbytes = int(g["bytes"]) if g["bytes"] != "-" else 0
     method = g["method"] if g["method"].isalpha() else "UNKNOWN"
     return {
         "host": host,
-        "client_ip": host if _IP.match(host) else host,
+        "client_ip": host,
         "timestamp": ts,
         "method": method,
         "path": g["path"],

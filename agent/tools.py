@@ -28,6 +28,7 @@ def _get(path: str, params: dict):
     return r.json()
 
 
+# "frm" is used in place of "from" throughout (Python keyword); maps to ?from= in HTTP requests
 def count_hits(path: str, frm: datetime, to: datetime):
     return _get("/api/metrics/path",
                 {"path": path, "from": _iso(frm), "to": _iso(to)})

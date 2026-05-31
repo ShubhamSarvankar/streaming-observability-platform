@@ -13,7 +13,10 @@ class LLM:
 class AnthropicLLM(LLM):
     def __init__(self):
         import anthropic
-        self._client = anthropic.Anthropic(api_key=os.environ["LLM_API_KEY"])
+        api_key = os.environ.get("LLM_API_KEY", "")
+        if not api_key:
+            raise RuntimeError("LLM_API_KEY env var is required for the Anthropic provider")
+        self._client = anthropic.Anthropic(api_key=api_key)
         self._model = os.environ.get("LLM_MODEL", "claude-haiku-4-5")
 
     def complete(self, system, user):

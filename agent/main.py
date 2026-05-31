@@ -1,5 +1,8 @@
 import sys
+from dotenv import load_dotenv
 from graph import build_graph
+
+load_dotenv()
 
 
 def main():

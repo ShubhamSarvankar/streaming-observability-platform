@@ -6,6 +6,7 @@ import com.obs.api.service.StatusMetricService;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Set;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class StatusMetricController {
+
+    private static final Set<String> VALID_CLASSES = Set.of("1xx", "2xx", "3xx", "4xx", "5xx");
 
     private final StatusMetricService service;
 
@@ -23,6 +26,9 @@ public class StatusMetricController {
             @PathVariable String statusClass,
             @RequestParam String from,
             @RequestParam String to) {
+        if (!VALID_CLASSES.contains(statusClass)) {
+            throw new BadRequestException("statusClass must be one of: 1xx 2xx 3xx 4xx 5xx");
+        }
         Instant fromInst = parseInstant(from, "from");
         Instant toInst = parseInstant(to, "to");
         if (toInst.isBefore(fromInst)) {

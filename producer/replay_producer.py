@@ -2,8 +2,11 @@ import json
 import os
 import time
 import logging
+from dotenv import load_dotenv
 from confluent_kafka import Producer
 from log_schema import parse_line
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("producer")
